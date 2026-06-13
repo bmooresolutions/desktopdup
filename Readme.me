@@ -1,0 +1,27 @@
+desktopdup documentation notes
+==============================
+
+This directory contains a production-oriented Go package for Windows Desktop
+Duplication capture.
+
+Primary documentation:
+
+- README.md: architecture overview, API notes, prerequisites, build guidance,
+  and a minimal usage example.
+- desktopdup.go: exported Go API surface and package-level documentation.
+- desktopdup_windows.go: cgo binding layer and Windows Session implementation.
+- desktopdup_unsupported.go: portable stubs for non-Windows or cgo-disabled
+  builds.
+- desktopdup_shim.cpp: root cgo compilation unit.
+- shim/desktopdup_shim.h: small C ABI shared by Go and C++.
+- shim/desktopdup_shim.cpp: Direct3D 11 and DXGI Output Duplication shim.
+- cmd/capture/main.go: commented example program.
+
+Build on Windows with cgo enabled and a compatible C++ toolchain:
+
+    go run ./cmd/capture
+
+For package validation without a C++ compiler, the unsupported stubs can be
+checked with:
+
+    CGO_ENABLED=0 go test ./...
